@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:banco/models/CPF_models.dart';
+import 'package:banco/models/INFO_Comum.dart';
 import 'package:banco/models/cliente_models.dart';
 import 'package:banco/models/conta_models.dart';
 import 'package:flutter/material.dart';
@@ -250,6 +252,35 @@ class NovoClienteComConta with ChangeNotifier {
   }
 
   List<ClienteContaAssociation> todasAscontas = [];
+
+  Future<void> pegarNoServidor() async {
+    final response1 = await http.get(
+      Uri.parse('$baseUrl/contasCorrentes.json'),
+    );
+
+    Map<String, dynamic> data = jsonDecode(response1.body);
+
+    data.forEach((clienteId, cliente) {
+      ClienteContaAssociation clienteContaAssociation = ClienteContaAssociation(
+        Cliente(
+          id: clienteId,
+          cpf: CPF(cliente['CPF']['valor']),
+          nome: Nome(cliente['Nome']['valor']),
+          endereco: Endereco(cliente['Endereço']['valor']),
+          idade: Idade(cliente['Idade']['valor']),
+          email: Email(cliente['Email']['valor']),
+          telefone: Telefone(cliente['Telefone']['valor']),
+        ),
+        Conta(
+          ContaBancaria(cliente['NumeroConta']),
+          cliente['Saldo'],
+        ),
+        clienteId,
+      );
+
+      todasAscontas.add(clienteContaAssociation);
+    });
+  }
 
   void insereNalistaGeraldeContas(ClienteContaAssociation clienteConta) {
     todasAscontas.add(clienteConta);

@@ -1,11 +1,25 @@
 import 'package:banco/components/DrawerGerente/drawer_gerentes.dart';
+import 'package:banco/provider/lista_cliente_novo.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:provider/provider.dart';
 
-class Gerente_view extends StatelessWidget {
+class Gerente_view extends StatefulWidget {
   Gerente_view({Key? key}) : super(key: key);
 
   @override
+  State<Gerente_view> createState() => _Gerente_viewState();
+}
+
+// ignore: camel_case_types
+class _Gerente_viewState extends State<Gerente_view> {
+  @override
+  void initState() {
+    super.initState();
+
+    Provider.of<NovoClienteComConta>(context, listen: false).pegarNoServidor();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -14,14 +28,14 @@ class Gerente_view extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              icon: Icon(Icons.exit_to_app)),
+              icon: const Icon(Icons.exit_to_app)),
         ],
-        title: Text("Gerente"),
+        title: const Text("Gerente"),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Text(
+            const Text(
               "Apresentação de resultados",
               style: TextStyle(fontSize: 25),
             ),
@@ -74,11 +88,11 @@ class Gerente_view extends StatelessWidget {
                 ),
               ),
             ),
-            Text(
+            const Text(
               "Entrada e saida geral",
               style: TextStyle(fontSize: 25),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             SizedBox(
@@ -86,8 +100,8 @@ class Gerente_view extends StatelessWidget {
               child: LineChart(
                 LineChartData(
                   backgroundColor: ThemeData().primaryColor,
-                  gridData: FlGridData(show: false),
-                  titlesData: FlTitlesData(show: false),
+                  gridData: const FlGridData(show: false),
+                  titlesData: const FlTitlesData(show: false),
                   borderData: FlBorderData(
                     show: true,
                     border: Border.all(
@@ -98,11 +112,11 @@ class Gerente_view extends StatelessWidget {
                   lineBarsData: [
                     LineChartBarData(
                       spots: [
-                        FlSpot(0, 3),
-                        FlSpot(1, 1),
-                        FlSpot(2, 4),
-                        FlSpot(3, 2),
-                        FlSpot(4, 5),
+                        const FlSpot(0, 3),
+                        const FlSpot(1, 1),
+                        const FlSpot(2, 4),
+                        const FlSpot(3, 2),
+                        const FlSpot(4, 5),
                       ],
                       isCurved: true,
                       color: Colors.blue,
@@ -115,7 +129,7 @@ class Gerente_view extends StatelessWidget {
           ],
         ),
       ),
-      drawer: DrawerGerentes(),
+      drawer: const DrawerGerentes(),
     );
   }
 }
