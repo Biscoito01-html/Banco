@@ -8,52 +8,47 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class NovoClienteComConta with ChangeNotifier {
-  final baseUrl = "https://banco-f9ddd-default-rtdb.firebaseio.com/";
+  final baseUrl = "https://banco-f9ddd-default-rtdb.firebaseio.com";
 
   // Chamada para acesso de conta corrente
   List<ClienteContaAssociation> clientesContaCorrente = [];
 
-  Future<void> updateConta(String id, Cliente cliente, Conta conta) async {
+  Future<void> updateConta(ClienteContaAssociation valor) async {
     try {
-      final response = await http.put(
-        Uri.parse(
-            '$baseUrl/contasCorrentes/$id.json'), // Substitua "contas" pelo caminho correto
+      final response = await http.patch(
+        Uri.parse('$baseUrl/contasCorrentes/${valor.id}.json'),
         body: jsonEncode(
           {
-            "Nome": cliente.nome,
-            "CPF": cliente.cpf,
-            "Idade": cliente.idade,
-            "Email": cliente.email,
-            "Telefone": cliente.telefone,
-            "Endereço": cliente.endereco,
-            "NumeroConta": conta.conta.numeroConta,
-            "Saldo": conta.saldo,
+            "Nome": valor.cliente.nome,
+            "CPF": valor.cliente.cpf,
+            "Idade": valor.cliente.idade,
+            "Email": valor.cliente.email,
+            "Telefone": valor.cliente.telefone,
+            "Endereço": valor.cliente.endereco,
+            "NumeroConta": valor.conta.conta.numeroConta,
+            "Saldo": valor.conta.saldo,
           },
         ),
       );
-
       if (response.statusCode == 200) {
-        // Atualize a lista local com a conta atualizada
         final updatedClienteConta = ClienteContaAssociation(
           Cliente(
-            cpf: cliente.cpf,
-            nome: cliente.nome,
-            endereco: cliente.endereco,
-            idade: cliente.idade,
-            email: cliente.email,
-            telefone: cliente.telefone,
+            cpf: valor.cliente.cpf,
+            nome: valor.cliente.nome,
+            endereco: valor.cliente.endereco,
+            idade: valor.cliente.idade,
+            email: valor.cliente.email,
+            telefone: valor.cliente.telefone,
           ),
-          conta,
-          id,
+          valor.conta,
+          valor.id,
         );
 
-        final index = todasAscontas.indexWhere((element) => element.id == id);
-        if (index != -1) {
+        final index =
+            todasAscontas.indexWhere((element) => element.id == valor.id);
+        if (index >= 0) {
           todasAscontas[index] = updatedClienteConta;
         }
-
-        // Adicione mais lógica aqui, se necessário
-        print('Conta atualizada com sucesso: $id');
       } else if (response.statusCode >= 300) {
         throw FormatException(
           'Houve um problema na reposta: ${response.statusCode}',
@@ -103,15 +98,6 @@ class NovoClienteComConta with ChangeNotifier {
         clientesContaCorrente.add(
           clienteContaAssoc,
         );
-        print(
-          clientesContaCorrente[0].cliente,
-        );
-        print(
-          clientesContaCorrente[0].id,
-        );
-        print(
-          clientesContaCorrente[0].conta,
-        );
         insereNalistaGeraldeContas(
           clienteContaAssoc,
         );
@@ -127,7 +113,6 @@ class NovoClienteComConta with ChangeNotifier {
     notifyListeners();
   }
 
-  //Chamada para acesso contas poupança
   List<ClienteContaAssociation> clienteNovaContaPoupanca = [];
 
   // ignore: unused_element
@@ -254,6 +239,8 @@ class NovoClienteComConta with ChangeNotifier {
   List<ClienteContaAssociation> todasAscontas = [];
 
   Future<void> pegarNoServidor() async {
+    todasAscontas.clear();
+
     final response1 = await http.get(
       Uri.parse('$baseUrl/contasCorrentes.json'),
     );
@@ -279,6 +266,7 @@ class NovoClienteComConta with ChangeNotifier {
       );
 
       todasAscontas.add(clienteContaAssociation);
+      print(todasAscontas);
     });
   }
 
