@@ -1,5 +1,7 @@
 import 'package:banco/pages/Formularios/formulario_conta.dart';
+import 'package:banco/provider/lista_cliente_novo.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,6 +17,12 @@ class _HomePageState extends State<HomePage> {
   bool cadastro = false;
 
   void cadastrar() {}
+  @override
+  void initState() {
+    super.initState();
+
+    Provider.of<NovoClienteComConta>(context, listen: false).pegarNoServidor();
+  }
 
   @override
   Widget build(BuildContext context) {

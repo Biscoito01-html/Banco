@@ -268,6 +268,8 @@ class NovoClienteComConta with ChangeNotifier {
       todasAscontas.add(clienteContaAssociation);
       print(todasAscontas);
     });
+
+    notifyListeners();
   }
 
   void insereNalistaGeraldeContas(ClienteContaAssociation clienteConta) {

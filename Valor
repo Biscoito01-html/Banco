@@ -1,0 +1,16 @@
+ValidoSS
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# No ramo main
+# Your branch is up to date with 'origin/main'.
+#
+# Mudanças a serem submetidas:
+#	modified:   lib/pages/Clientes/conta_geral_apresentacao.dart
+#	modified:   lib/pages/Clientes/detalhar_conta_corrente.dart
+#	modified:   lib/pages/Clientes/detalhar_conta_credito.dart
+#	modified:   lib/pages/Clientes/detalhar_conta_poupanca.dart
+#	modified:   lib/pages/Clientes/home_page.dart
+#	modified:   lib/pages/Gerente/gerente_view.dart
+#	modified:   lib/provider/lista_cliente_novo.dart
+#

@@ -2,6 +2,7 @@ import 'package:banco/components/DrawerGerente/drawer_gerentes.dart';
 import 'package:banco/provider/lista_cliente_novo.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+
 import 'package:provider/provider.dart';
 
 class Gerente_view extends StatefulWidget {
@@ -11,7 +12,6 @@ class Gerente_view extends StatefulWidget {
   State<Gerente_view> createState() => _Gerente_viewState();
 }
 
-// ignore: camel_case_types
 class _Gerente_viewState extends State<Gerente_view> {
   @override
   void initState() {
@@ -20,21 +20,50 @@ class _Gerente_viewState extends State<Gerente_view> {
     Provider.of<NovoClienteComConta>(context, listen: false).pegarNoServidor();
   }
 
+  @override
   Widget build(BuildContext context) {
+    final clientes = Provider.of<NovoClienteComConta>(context).todasAscontas;
+
     return Scaffold(
       appBar: AppBar(
         actions: [
           IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(Icons.exit_to_app)),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.exit_to_app),
+          ),
         ],
         title: const Text("Gerente"),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            const Text(
+              "Detalhes dos Clientes Cadastrados",
+              style: TextStyle(fontSize: 25),
+            ),
+            SizedBox(
+              height: 200,
+              child: ListView.builder(
+                itemCount: clientes.length,
+                itemBuilder: (context, index) {
+                  final cliente = clientes[index].cliente;
+                  final conta = clientes[index].conta;
+
+                  return ListTile(
+                    title: Text("Nome: ${cliente.nome.nome}"),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("CPF: ${cliente.cpf.numeroDeCpf}"),
+                        Text("Saldo: R\$ ${conta.saldo}"),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
             const Text(
               "Apresentação de resultados",
               style: TextStyle(fontSize: 25),

@@ -2,97 +2,129 @@ import 'package:banco/components/button_inicial.dart';
 import 'package:banco/components/DrawerClientes/drawer_cliente.dart';
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
 class ContaCorrenteApresentacao extends StatelessWidget {
-  ContaCorrenteApresentacao({super.key});
+  ContaCorrenteApresentacao({Key? key});
 
   bool valor = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(Icons.exit_to_app_rounded),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.exit_to_app_rounded),
+            ),
+          ],
+          title: const Text("Conta"),
+          bottom: TabBar(
+            tabs: [
+              Tab(text: 'Contas'),
+              Tab(text: 'Transferências'),
+            ],
           ),
-        ],
-        title: const Text("Conta corrente"),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
+        ),
+        body: TabBarView(
           children: [
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  textAlign: TextAlign.center,
-                  "Banco Force",
-                  style: TextStyle(
-                    fontSize: 25,
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  ButtonTelaInicial(
+                    button: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/detalhesContaCorrente');
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          const Text("Conta Corrente"),
+                          const Text("Saldo"),
+                          const Text("R\$ 1.300,00"),
+                          valor
+                              ? const Text("Cheque-Especial: 0,00")
+                              : const Text("Cheque-Especial : R\$ 1.300,00"),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            ButtonTelaInicial(
-              button: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/detalhesContaCorrente');
-                },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    const Text("Conta Corrente"),
-                    const Text("Saldo"),
-                    const Text("R\$ 1.300,00"),
-                    valor
-                        // ignore: dead_code
-                        ? const Text("Cheque-Especial: 0,00")
-                        : const Text("Cheque-Especial : R\$ 1.300,00")
-                  ],
-                ),
+                  ButtonTelaInicial(
+                    button: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/detalhesContaPupanca');
+                      },
+                      child: const Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text("Conta Poupança"),
+                          Text("Saldo"),
+                          Text("R\$ 1.300,00"),
+                        ],
+                      ),
+                    ),
+                  ),
+                  ButtonTelaInicial(
+                    button: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/detalhesContaCredito");
+                      },
+                      child: const Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text("Conta Credito"),
+                          Text("Saldo"),
+                          Text("R\$ 1.300,00"),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const Row(
+                    children: [],
+                  ),
+                ],
               ),
             ),
-            ButtonTelaInicial(
-              button: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/detalhesContaPupanca');
-                },
-                child: const Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text("Conta Poupança"),
-                    Text("Saldo"),
-                    Text("R\$ 1.300,00")
-                  ],
-                ),
+            // Adicione aqui a tela de transferências ou outra aba desejada
+            // Exemplo: TelaTransferencias(),
+            Container(
+              padding: EdgeInsets.all(16.0),
+              child: ListView(
+                children: [
+                  TransferenciaItem(valor: 50.0, destinatario: 'João'),
+                  TransferenciaItem(valor: 30.0, destinatario: 'Maria'),
+                  TransferenciaItem(valor: 80.0, destinatario: 'Carlos'),
+                  // Adicione mais itens de transferência conforme necessário
+                ],
               ),
-            ),
-            ButtonTelaInicial(
-              button: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, "/detalhesContaCredito");
-                },
-                child: const Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text("Conta Credito"),
-                    Text("Saldo"),
-                    Text("R\$ 1.300,00")
-                  ],
-                ),
-              ),
-            ),
-            const Row(
-              children: [],
             )
           ],
         ),
+        drawer: const DrawerImplementes(),
       ),
-      drawer: const DrawerImplementes(),
+    );
+  }
+}
+
+class TransferenciaItem extends StatelessWidget {
+  final double valor;
+  final String destinatario;
+
+  TransferenciaItem({required this.valor, required this.destinatario});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 3.0,
+      margin: EdgeInsets.symmetric(vertical: 8.0),
+      child: ListTile(
+        leading: Icon(Icons.arrow_forward),
+        title: Text('Transferência para $destinatario'),
+        subtitle: Text('Valor: R\$ $valor'),
+      ),
     );
   }
 }
