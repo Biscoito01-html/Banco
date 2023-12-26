@@ -1,12 +1,15 @@
 import 'package:banco/components/DrawerFuncionario/drawer_funcionarios.dart';
 import 'package:banco/components/botao_funcionario.dart';
+import 'package:banco/provider/lista_funcionario.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Funcionario_view extends StatelessWidget {
   const Funcionario_view({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<ListaFuncionairo>(context);
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -33,7 +36,9 @@ class Funcionario_view extends StatelessWidget {
                 CustomButton(
                   icon: Icons.account_box_sharp,
                   label: "Atendimento",
-                  onPressed: () {},
+                  onPressed: () {
+                    provider.gerar();
+                  },
                 ),
                 CustomButton(
                   icon: Icons.real_estate_agent_outlined,

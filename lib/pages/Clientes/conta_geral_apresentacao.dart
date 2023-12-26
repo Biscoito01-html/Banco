@@ -2,6 +2,7 @@ import 'package:banco/components/button_inicial.dart';
 import 'package:banco/components/DrawerClientes/drawer_cliente.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class ContaCorrenteApresentacao extends StatelessWidget {
   ContaCorrenteApresentacao({Key? key});
 
@@ -22,7 +23,7 @@ class ContaCorrenteApresentacao extends StatelessWidget {
             ),
           ],
           title: const Text("Conta"),
-          bottom: TabBar(
+          bottom: const TabBar(
             tabs: [
               Tab(text: 'Contas'),
               Tab(text: 'Transferências'),
@@ -91,7 +92,7 @@ class ContaCorrenteApresentacao extends StatelessWidget {
             // Adicione aqui a tela de transferências ou outra aba desejada
             // Exemplo: TelaTransferencias(),
             Container(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: ListView(
                 children: [
                   TransferenciaItem(valor: 50.0, destinatario: 'João'),

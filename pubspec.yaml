@@ -40,6 +40,7 @@ dependencies:
   animated_text_kit: ^4.2.2
   http: ^1.1.2
   fl_chart: ^0.65.0
+  pocketbase: ^0.17.0
 
 dev_dependencies:
   flutter_test:

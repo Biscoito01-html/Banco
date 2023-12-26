@@ -1,0 +1,48 @@
+
+class Teste  {
+  ValueNotifier<bool> senha1 = ValueNotifier<bool>(false); 
+  ValueNotifier<int> senha2 = ValueNotifier<int>(0);
+
+   void trocar1 () { 
+    senha1.value = true;
+   }
+   int trocar2 ( int id ) { 
+    return senha2.value =  id;
+   }
+  
+}
+
+class MyWidget extends StatefulWidget {
+  const MyWidget({super.key});
+
+  @override
+  State<MyWidget> createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
+  @override
+
+  Teste teste = Teste();
+  
+  Widget build(BuildContext context) {
+
+      int valor = teste.senha2.value;
+
+    return ValueListenableBuilder(
+      valueListenable: teste.senha2,
+      builder: (context, valor, _) {
+         return Column(
+          children: [
+            Text(valor.toString()),
+                ElevatedButton(onPressed: () {
+                  
+                }, child: Text('clicar'),),
+            ElevatedButton(onPressed: () {
+              teste.trocar2(2);
+            }, child: Text('clicar'),),
+          ],
+        );
+      }
+    );
+  }
+}

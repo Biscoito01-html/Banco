@@ -1,5 +1,7 @@
 import 'package:banco/models/cliente_models.dart';
+import 'package:banco/models/conta_models.dart';
 import 'package:banco/provider/lista_cliente_novo.dart';
+import 'package:banco/provider/repository_geral.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +25,9 @@ class _ContaFormState extends State<ContaForm> {
   NovoClienteComConta get provider =>
       Provider.of<NovoClienteComConta>(context, listen: false);
 
+  IRepositoryGeral get providerGeral =>
+      Provider.of<IRepositoryGeral>(context, listen: false);
+
   String _tipoContaSelecionada = 'Conta Corrente';
 
   final form = GlobalKey<FormState>();
@@ -36,6 +41,7 @@ class _ContaFormState extends State<ContaForm> {
         idade: idadeController.text,
         email: emailController.text,
         telefone: telefoneController.text);
+    providerGeral.setContaCorrente(cliente);
     switch (_tipoContaSelecionada) {
       case 'Conta Corrente':
         provider.inserirClienteContaCorrente(cliente).catchError((error) {

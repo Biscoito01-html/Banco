@@ -11,6 +11,7 @@ import 'package:banco/pages/Gerente/gerente_view.dart';
 import 'package:banco/pages/Login/longin_validador_entrada.dart';
 import 'package:banco/provider/lista_cliente_novo.dart';
 import 'package:banco/provider/lista_funcionario.dart';
+import 'package:banco/provider/repository_geral.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => NovoClienteComConta()),
         ChangeNotifierProvider(create: (_) => ListaFuncionairo()),
+        ChangeNotifierProvider(create: (_) => IRepositoryGeral())
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

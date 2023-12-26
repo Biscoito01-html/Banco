@@ -1,5 +1,6 @@
 import 'package:banco/components/DrawerGerente/drawer_gerentes.dart';
 import 'package:banco/provider/lista_cliente_novo.dart';
+import 'package:banco/provider/repository_geral.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -18,11 +19,14 @@ class _Gerente_viewState extends State<Gerente_view> {
     super.initState();
 
     Provider.of<NovoClienteComConta>(context, listen: false).pegarNoServidor();
+    Provider.of<IRepositoryGeral>(context, listen: false).BuscarNoservidor();
   }
 
   @override
   Widget build(BuildContext context) {
-    final clientes = Provider.of<NovoClienteComConta>(context).todasAscontas;
+    final clientes = Provider.of<NovoClienteComConta>(context).contasCorrentes1;
+    final valoresdeCliente =
+        Provider.of<IRepositoryGeral>(context, listen: false).cliente;
 
     return Scaffold(
       appBar: AppBar(
@@ -58,6 +62,27 @@ class _Gerente_viewState extends State<Gerente_view> {
                       children: [
                         Text("CPF: ${cliente.cpf.numeroDeCpf}"),
                         Text("Saldo: R\$ ${conta.saldo}"),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+            SizedBox(
+              height: 200,
+              child: ListView.builder(
+                itemCount: valoresdeCliente.length,
+                itemBuilder: (context, index) {
+                  final cliente = valoresdeCliente[index];
+
+                  return ListTile(
+                    title: Text("Nome: ${cliente.nome.nome}"),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("CPF: ${cliente.cpf}"),
+                        Text("${cliente.nome}"),
+                        Text("${cliente.idade}"),
                       ],
                     ),
                   );
