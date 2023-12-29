@@ -4,6 +4,7 @@ import 'package:banco/provider/lista_funcionario.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+// ignore: camel_case_types
 class Funcionario_view extends StatelessWidget {
   const Funcionario_view({super.key});
 
@@ -17,14 +18,14 @@ class Funcionario_view extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              icon: Icon(Icons.login))
+              icon: const Icon(Icons.login))
         ],
         title: const Text("Atendimento Funcionario"),
       ),
       drawer: const DrawerFuncionario(),
       body: Column(
         children: [
-          Text(
+          const Text(
             "Bem vindo, Fulano",
             style: TextStyle(fontSize: 25),
           ),

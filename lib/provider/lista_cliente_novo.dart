@@ -4,10 +4,8 @@ import 'package:banco/models/CPF_models.dart';
 import 'package:banco/models/INFO_Comum.dart';
 import 'package:banco/models/cliente_models.dart';
 import 'package:banco/models/conta_models.dart';
-import 'package:banco/provider/repository_geral.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 
 class NovoClienteComConta with ChangeNotifier {
   final baseUrl = "https://banco-f9ddd-default-rtdb.firebaseio.com";
@@ -243,93 +241,7 @@ class NovoClienteComConta with ChangeNotifier {
   List<ClienteContaAssociation> contasPoupanca1 = [];
   List<ClienteContaAssociation> contasCreditos1 = [];
 
-  Future<void> pegarNoServidor() async {
-    contasCorrentes1.clear();
-    contasCorrentes1.clear();
-    contasCreditos1.clear();
-
-    print('$contasCorrentes1 ANTES DO ASYNC  AQUI VOCE TEM CONTA CORRENTES');
-    print("$contasCreditos1  ANTES DO ASYNC AQUI VOCE TEM CONTA CREDITOS");
-    print('$contasPoupanca1  ANTES DO ASYNC AQUI VOCE TEM CONTA POUPANCA');
-
-    try {
-      await pegarContasCorrentes();
-      await pegarContasPoupanca();
-      await pegarContasCreditos();
-      print('$contasCorrentes1 DEPOIS DO ASYNC AQUI VOCE TEM CONTA CORRENTES');
-      print("$contasCreditos1  DEPOIS DO ASYNC AQUI VOCE TEM CONTA CREDITOS");
-      print('$contasPoupanca1  DEPOIS DO ASYNC AQUI VOCE TEM CONTA POUPANCA');
-    } catch (e) {
-      print('Caught error: $e');
-    }
-    notifyListeners();
-  }
-
-  Future<void> pegarContasCorrentes() async {
-    var response = await http.get(Uri.parse('$baseUrl/contasCorrentes.json'));
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(response.body);
-      processarDados(data, contasCorrentes1);
-      print(
-          '$contasCorrentes1 AQUI DENTRO DE PEGAR CONTAS CORRENTES AQUI VOCE TEM CONTA CORRENTES');
-      print(
-          "$contasCreditos1  AQUI DENTRO DE PEGAR CONTAS CORRENTES AQUI VOCE TEM CONTA CREDITOS");
-      print(
-          '$contasPoupanca1  AQUI DENTRO DE PEGAR CONTAS CORRENTES AQUI VOCE TEM CONTA POUPANCA');
-    } else {
-      throw Exception(
-          'Failed to load data, status code: ${response.statusCode}');
-    }
-  }
-
-  Future<void> pegarContasPoupanca() async {
-    var response = await http.get(Uri.parse('$baseUrl/contasPoupanca.json'));
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(response.body);
-      processarDados(data, contasPoupanca1);
-      print(
-          '$contasCorrentes1 AQUI EM PEGAR POUPANCA  AQUI VOCE TEM CONTA CORRENTES');
-      print(
-          "$contasCreditos1  AQUI EM PEGAR POUPANCA AQUI VOCE TEM CONTA CREDITOS");
-      print(
-          '$contasPoupanca1  AQUI EM PEGAR POUPANCA AQUI VOCE TEM CONTA POUPANCA');
-    } else {
-      throw Exception(
-          'Failed to load data, status code: ${response.statusCode}');
-    }
-  }
-
-  Future<void> pegarContasCreditos() async {
-    var response = await http.get(Uri.parse('$baseUrl/contasCreditos.json'));
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(response.body);
-      processarDados(data, contasCreditos1);
-      print(
-          '$contasCorrentes1 AQUI EM PEGAR CONTAS CREDITOS  AQUI VOCE TEM CONTA CORRENTES');
-      print(
-          "$contasCreditos1  AQUI EM PEGAR CONTAS CREDITOS AQUI VOCE TEM CONTA CREDITOS");
-      print(
-          '$contasPoupanca1  AQUI EM PEGAR CONTAS CREDITOS AQUI VOCE TEM CONTA POUPANCA');
-    } else {
-      throw Exception(
-          'Failed to load data, status code: ${response.statusCode}');
-    }
-  }
-
-  void processarDados(
-      Map<String, dynamic> data, List<ClienteContaAssociation> directon) {
-    data.forEach((clienteId, cliente) {
-      ClienteContaAssociation clienteContaAssociation =
-          createClienteContaAssociation(
-        clienteId,
-        cliente,
-      );
-      print('$contasCorrentes1 AQUI VOCE TEM CONTA CORRENTES');
-      print("$contasCreditos1 AQUI VOCE TEM CONTA CREDITOS");
-      print('$contasPoupanca1 AQUI VOCE TEM CONTA POUPANCA');
-      directon.add(clienteContaAssociation);
-    });
-  }
+  Future<void> pegarNoServidor() async {}
 
   ClienteContaAssociation createClienteContaAssociation(
       String clienteId, dynamic cliente) {

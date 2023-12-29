@@ -1,15 +1,10 @@
-import 'package:banco/provider/lista_cliente_novo.dart';
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class DetalheContaCorrente extends StatelessWidget {
   DetalheContaCorrente({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<NovoClienteComConta>(context, listen: false);
-
     return Scaffold(
         appBar: AppBar(
           title: Text("Conta Corrente"),

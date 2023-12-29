@@ -3,6 +3,7 @@ import 'package:banco/pages/Formularios/formulario_conta.dart';
 import 'package:flutter/material.dart';
 
 class Logins extends StatefulWidget {
+  // ignore: prefer_const_constructors_in_immutables
   Logins({Key? key}) : super(key: key);
 
   @override
@@ -17,7 +18,7 @@ class _LoginsState extends State<Logins> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login"),
+        title: const Text("Login"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -25,17 +26,15 @@ class _LoginsState extends State<Logins> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             _valor
-                ? ContaForm()
-                : Container(
-                    child: Column(
-                      children: [
-                        _buildTextField("Login"),
-                        _buildTextField("Senha", isPassword: true),
-                        const SizedBox(height: 16.0),
-                        _buildLoginTypeDropdown(),
-                        const SizedBox(height: 16.0),
-                      ],
-                    ),
+                ? const ContaForm()
+                : Column(
+                    children: [
+                      _buildTextField("Login"),
+                      _buildTextField("Senha", isPassword: true),
+                      const SizedBox(height: 16.0),
+                      _buildLoginTypeDropdown(),
+                      const SizedBox(height: 16.0),
+                    ],
                   ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -44,7 +43,7 @@ class _LoginsState extends State<Logins> {
                   onPressed: () {
                     _navigateToSelectedScreen();
                   },
-                  child: Text("Entrar"),
+                  child: const Text("Entrar"),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -52,7 +51,7 @@ class _LoginsState extends State<Logins> {
                       _valor = !_valor;
                     });
                   },
-                  child: Text("Cadastrar"),
+                  child: const Text("Cadastrar"),
                 ),
               ],
             ),

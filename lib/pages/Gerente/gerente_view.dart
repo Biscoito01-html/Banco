@@ -1,33 +1,37 @@
 import 'package:banco/components/DrawerGerente/drawer_gerentes.dart';
-import 'package:banco/provider/lista_cliente_novo.dart';
+import 'package:banco/pages/Gerente/detalhamento_cliente.dart';
 import 'package:banco/provider/repository_geral.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 import 'package:provider/provider.dart';
 
+// ignore: camel_case_types
 class Gerente_view extends StatefulWidget {
+  // ignore: prefer_const_constructors_in_immutables
   Gerente_view({Key? key}) : super(key: key);
 
   @override
   State<Gerente_view> createState() => _Gerente_viewState();
 }
 
+// ignore: camel_case_types
 class _Gerente_viewState extends State<Gerente_view> {
   @override
   void initState() {
     super.initState();
-
-    Provider.of<NovoClienteComConta>(context, listen: false).pegarNoServidor();
-    Provider.of<IRepositoryGeral>(context, listen: false).BuscarNoservidor();
+    Provider.of<IRepositoryGeral>(context, listen: false).buscarNoservidor();
   }
 
   @override
   Widget build(BuildContext context) {
-    final clientes = Provider.of<NovoClienteComConta>(context).contasCorrentes1;
-    final valoresdeCliente =
-        Provider.of<IRepositoryGeral>(context, listen: false).cliente;
+    final valoresContaCorrente =
+        Provider.of<IRepositoryGeral>(context, listen: false).contaCorrente;
 
+    final valoresContaPoupanca =
+        Provider.of<IRepositoryGeral>(context, listen: false).contaPoupanca;
+    final valoresContaCredito =
+        Provider.of<IRepositoryGeral>(context, listen: false).contaCredito;
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -47,43 +51,129 @@ class _Gerente_viewState extends State<Gerente_view> {
               "Detalhes dos Clientes Cadastrados",
               style: TextStyle(fontSize: 25),
             ),
+            const Text(
+              "Contas Correntes ",
+              style: TextStyle(fontSize: 20, color: Colors.red),
+            ),
             SizedBox(
               height: 200,
               child: ListView.builder(
-                itemCount: clientes.length,
+                itemCount: valoresContaCorrente.length,
                 itemBuilder: (context, index) {
-                  final cliente = clientes[index].cliente;
-                  final conta = clientes[index].conta;
-
-                  return ListTile(
-                    title: Text("Nome: ${cliente.nome.nome}"),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("CPF: ${cliente.cpf.numeroDeCpf}"),
-                        Text("Saldo: R\$ ${conta.saldo}"),
-                      ],
+                  final cliente = valoresContaCorrente[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => EditarContaCliente(
+                            id: "${cliente.id}",
+                            cpf: "${cliente.cpf}",
+                            nome: "${cliente.nome}",
+                            telefone: "${cliente.telefone}",
+                            email: "${cliente.email}",
+                            endereco: "${cliente.endereco}",
+                            idade: "${cliente.idade}",
+                          ),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(border: Border.all()),
+                      child: ListTile(
+                        title: Text("Nome: ${cliente.nome.nome}"),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("E-mail: ${cliente.email}"),
+                            Text("Idade: ${cliente.idade}"),
+                          ],
+                        ),
+                      ),
                     ),
                   );
                 },
               ),
             ),
+            const Text("Contas Poupanças",
+                style: TextStyle(fontSize: 20, color: Colors.red)),
             SizedBox(
               height: 200,
               child: ListView.builder(
-                itemCount: valoresdeCliente.length,
+                itemCount: valoresContaPoupanca.length,
                 itemBuilder: (context, index) {
-                  final cliente = valoresdeCliente[index];
-
-                  return ListTile(
-                    title: Text("Nome: ${cliente.nome.nome}"),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("CPF: ${cliente.cpf}"),
-                        Text("${cliente.nome}"),
-                        Text("${cliente.idade}"),
-                      ],
+                  final cliente = valoresContaPoupanca[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => EditarContaCliente(
+                            id: "${cliente.id}",
+                            cpf: "${cliente.cpf}",
+                            nome: "${cliente.nome}",
+                            telefone: "${cliente.telefone}",
+                            email: "${cliente.email}",
+                            endereco: "${cliente.endereco}",
+                            idade: "${cliente.idade}",
+                          ),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(border: Border.all()),
+                      child: ListTile(
+                        title: Text("Nome: ${cliente.nome.nome}"),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("E-mail: ${cliente.email}"),
+                            Text("Idade: ${cliente.idade}"),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            const Text("Contas Credito",
+                style: TextStyle(fontSize: 20, color: Colors.red)),
+            SizedBox(
+              height: 200,
+              child: ListView.builder(
+                itemCount: valoresContaCredito.length,
+                itemBuilder: (context, index) {
+                  final cliente = valoresContaCredito[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => EditarContaCliente(
+                            id: "${cliente.id}",
+                            cpf: "${cliente.cpf}",
+                            nome: "${cliente.nome}",
+                            telefone: "${cliente.telefone}",
+                            email: "${cliente.email}",
+                            endereco: "${cliente.endereco}",
+                            idade: "${cliente.idade}",
+                          ),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(border: Border.all()),
+                      child: ListTile(
+                        title: Text("Nome: ${cliente.nome.nome}"),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("E-mail: ${cliente.email}"),
+                            Text("Idade: ${cliente.idade}"),
+                          ],
+                        ),
+                      ),
                     ),
                   );
                 },

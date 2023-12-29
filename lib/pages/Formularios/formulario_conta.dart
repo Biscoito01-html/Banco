@@ -1,8 +1,6 @@
 import 'package:banco/models/cliente_models.dart';
-import 'package:banco/models/conta_models.dart';
 import 'package:banco/provider/lista_cliente_novo.dart';
 import 'package:banco/provider/repository_geral.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -35,40 +33,27 @@ class _ContaFormState extends State<ContaForm> {
   void _criarConta() {
     form.currentState!.save();
     final cliente = Cliente.criarCliente(
-        cpf: cpfController.text,
-        nome: nomeDoClienteController.text,
-        endereco: enderecoController.text,
-        idade: idadeController.text,
-        email: emailController.text,
-        telefone: telefoneController.text);
-    providerGeral.setContaCorrente(cliente);
+      cpf: cpfController.text,
+      nome: nomeDoClienteController.text,
+      endereco: enderecoController.text,
+      idade: idadeController.text,
+      email: emailController.text,
+      telefone: telefoneController.text,
+    );
+
     switch (_tipoContaSelecionada) {
       case 'Conta Corrente':
-        provider.inserirClienteContaCorrente(cliente).catchError((error) {
-          return showDialog(
-              context: context,
-              builder: (ctx) => AlertDialog(
-                    title: const Text("Ocorreu um erro"),
-                    content: Text(error.toString()),
-                    actions: [
-                      TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text("OK"))
-                    ],
-                  ));
-        });
+        providerGeral.setContaCorrente(cliente);
         _mostrarMensagemSucesso('Criado com sucesso');
 
         break;
       case 'Conta Poupança':
-        provider.inserirClienteContaPoupanca(cliente);
+        providerGeral.setPoupanca(cliente);
         _mostrarMensagemSucesso('Criado com porems sucesso');
 
         break;
       case 'Conta de Crédito':
-        provider.inserirClienteContaCredito(cliente);
+        providerGeral.setCredito(cliente);
         _mostrarMensagemSucesso('Criado com sucesso');
 
       default:
@@ -81,7 +66,7 @@ class _ContaFormState extends State<ContaForm> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(mensagem),
-        duration: Duration(seconds: 2),
+        duration: const Duration(seconds: 2),
       ),
     );
   }

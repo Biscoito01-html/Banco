@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class ContaCorrenteApresentacao extends StatelessWidget {
+  // ignore: use_key_in_widget_constructors
   ContaCorrenteApresentacao({Key? key});
 
   bool valor = false;
@@ -94,7 +95,7 @@ class ContaCorrenteApresentacao extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16.0),
               child: ListView(
-                children: [
+                children: const [
                   TransferenciaItem(valor: 50.0, destinatario: 'João'),
                   TransferenciaItem(valor: 30.0, destinatario: 'Maria'),
                   TransferenciaItem(valor: 80.0, destinatario: 'Carlos'),
@@ -114,15 +115,16 @@ class TransferenciaItem extends StatelessWidget {
   final double valor;
   final String destinatario;
 
-  TransferenciaItem({required this.valor, required this.destinatario});
+  const TransferenciaItem(
+      {super.key, required this.valor, required this.destinatario});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 3.0,
-      margin: EdgeInsets.symmetric(vertical: 8.0),
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
       child: ListTile(
-        leading: Icon(Icons.arrow_forward),
+        leading: const Icon(Icons.arrow_forward),
         title: Text('Transferência para $destinatario'),
         subtitle: Text('Valor: R\$ $valor'),
       ),
