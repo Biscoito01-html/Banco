@@ -121,6 +121,7 @@ class IRepositoryGeral with ChangeNotifier {
       print('Erro durante a requisição: $error');
     }
   }
+//separa o metodo buscar noservidor em uma função para cada lista
 
   Future<void> buscarNoservidor() async {
     cliente.clear();

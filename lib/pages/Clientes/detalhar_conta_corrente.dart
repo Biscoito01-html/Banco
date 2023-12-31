@@ -33,25 +33,28 @@ class DetalheContaCorrente extends StatelessWidget {
                 "R\$ 1.300,00",
                 style: TextStyle(fontSize: 35, color: Colors.green),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Transferência",
-                      style: TextStyle(fontSize: 25),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Transferência",
+                        style: TextStyle(fontSize: 25),
+                      ),
                     ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text("Depósito", style: TextStyle(fontSize: 25)),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text("Pix", style: TextStyle(fontSize: 25)),
-                  ),
-                ],
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: Text("Depósito", style: TextStyle(fontSize: 25)),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: Text("Pix", style: TextStyle(fontSize: 25)),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
