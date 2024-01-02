@@ -5,12 +5,23 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // ignore: camel_case_types
-class Funcionario_view extends StatelessWidget {
+class Funcionario_view extends StatefulWidget {
   const Funcionario_view({super.key});
 
   @override
+  State<Funcionario_view> createState() => _Funcionario_viewState();
+}
+
+class _Funcionario_viewState extends State<Funcionario_view> {
+  @override
+  void initState() {
+    Provider.of<ListaFuncionairo>(context, listen: false).Buscarnoservidor();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ListaFuncionairo>(context);
+    final provider = Provider.of<ListaFuncionairo>(context).funcionariosAtivos;
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -37,9 +48,7 @@ class Funcionario_view extends StatelessWidget {
                 CustomButton(
                   icon: Icons.account_box_sharp,
                   label: "Atendimento",
-                  onPressed: () {
-                    provider.gerar();
-                  },
+                  onPressed: () {},
                 ),
                 CustomButton(
                   icon: Icons.real_estate_agent_outlined,
@@ -51,14 +60,46 @@ class Funcionario_view extends StatelessWidget {
                   label: "Loteria",
                   onPressed: () {},
                 ),
-                CustomButton(
-                  icon: Icons.account_box_sharp,
-                  label: "Loteria",
-                  onPressed: () {},
-                )
               ],
             ),
           ),
+          const Divider(color: Colors.amber),
+          Expanded(
+            child: ListView.builder(
+              itemCount: provider.length,
+              itemBuilder: (context, index) {
+                final cliente = provider[index];
+
+                return Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        CircleAvatar(
+                          child: Text((index + 1).toString()),
+                        ),
+                        Text(
+                          cliente.nome.toString(),
+                        ),
+                        Text(
+                          cliente.idade.toString(),
+                        ),
+                        Text(
+                          cliente.cargo.toString(),
+                        ),
+                        Text(
+                          cliente.telefone.toString(),
+                        ),
+                        Text(
+                          cliente.email.toString(),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              },
+            ),
+          )
         ],
       ),
     );

@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:banco/models/CPF_models.dart';
-import 'package:banco/models/INFO_Comum.dart';
 import 'package:banco/models/cliente_models.dart';
 import 'package:banco/models/conta_models.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +10,8 @@ class NovoClienteComConta with ChangeNotifier {
 
   // Chamada para acesso de conta corrente
   List<ClienteContaAssociation> clientesContaCorrente = [];
+  List<ClienteContaAssociation> clienteNovaContaPoupanca = [];
+  List<ClienteContaAssociation> clienteNovaContaCredito = [];
 
   Future<void> updateConta(ClienteContaAssociation valor) async {
     try {
@@ -113,8 +113,6 @@ class NovoClienteComConta with ChangeNotifier {
     notifyListeners();
   }
 
-  List<ClienteContaAssociation> clienteNovaContaPoupanca = [];
-
   // ignore: unused_element
   Future<void> inserirClienteContaPoupanca(Cliente cliente) async {
     try {
@@ -175,8 +173,6 @@ class NovoClienteComConta with ChangeNotifier {
 
     notifyListeners();
   }
-
-  List<ClienteContaAssociation> clienteNovaContaCredito = [];
 
   Future<void> inserirClienteContaCredito(Cliente cliente) async {
     try {
@@ -242,26 +238,6 @@ class NovoClienteComConta with ChangeNotifier {
   List<ClienteContaAssociation> contasCreditos1 = [];
 
   Future<void> pegarNoServidor() async {}
-
-  ClienteContaAssociation createClienteContaAssociation(
-      String clienteId, dynamic cliente) {
-    return ClienteContaAssociation(
-      Cliente(
-        id: clienteId,
-        cpf: CPF(cliente['CPF']['valor'] ?? ""),
-        nome: Nome(cliente['Nome']['valor'] ?? ""),
-        endereco: Endereco(cliente['Endereço']['valor'] ?? ""),
-        idade: Idade(cliente['Idade']['valor'] ?? ""),
-        email: Email(cliente['Email']['valor'] ?? ""),
-        telefone: Telefone(cliente['Telefone']['valor'] ?? ""),
-      ),
-      Conta(
-        ContaBancaria(cliente['NumeroConta'] ?? ""),
-        cliente['Saldo'] ?? "",
-      ),
-      clienteId,
-    );
-  }
 
   final valorGeralDeContas = [];
 

@@ -1,3 +1,4 @@
+import 'package:banco/pages/Formularios/formulario_funcionario.dart';
 import 'package:flutter/material.dart';
 
 class DrawerGerentes extends StatelessWidget {
@@ -46,7 +47,10 @@ class DrawerGerentes extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.emoji_people_sharp),
             title: const Text("Gerenciamento Funcionarios"),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Formulario()));
+            },
           ),
           ListTile(
             leading: const Icon(Icons.chat_outlined),

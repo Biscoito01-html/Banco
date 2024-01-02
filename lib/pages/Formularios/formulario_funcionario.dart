@@ -190,7 +190,7 @@ class _FormularioState extends State<Formulario> {
       );
 
       Provider.of<ListaFuncionairo>(context, listen: false)
-          .insereFuncionario(funcionario);
+          .setFuncionario(funcionario);
 
       _mostrarMensagemSucesso("Cadastrado com sucesso");
     }
