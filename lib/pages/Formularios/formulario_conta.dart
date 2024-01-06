@@ -43,16 +43,19 @@ class _ContaFormState extends State<ContaForm> {
 
     switch (_tipoContaSelecionada) {
       case 'Conta Corrente':
+        provider.inserirClienteContaCorrente(cliente);
         providerGeral.setContaCorrente(cliente);
         _mostrarMensagemSucesso('Criado com sucesso');
 
         break;
       case 'Conta Poupança':
+        provider.inserirClienteContaPoupanca(cliente);
         providerGeral.setPoupanca(cliente);
         _mostrarMensagemSucesso('Criado com porems sucesso');
 
         break;
       case 'Conta de Crédito':
+        provider.inserirClienteContaCredito(cliente);
         providerGeral.setCredito(cliente);
         _mostrarMensagemSucesso('Criado com sucesso');
 

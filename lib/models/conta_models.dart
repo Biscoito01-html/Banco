@@ -36,6 +36,10 @@ class Conta {
   String toString() {
     return "Número da Conta: ${conta.numeroConta}, Saldo: $saldo";
   }
+
+  Map<String, dynamic> toJson() {
+    return {'numeroConta': conta.numeroConta, 'conta': conta, 'saldo': saldo};
+  }
 }
 
 class ContaCorrente extends Conta {
