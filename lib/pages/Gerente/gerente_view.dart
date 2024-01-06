@@ -1,5 +1,6 @@
 import 'package:banco/components/DrawerGerente/drawer_gerentes.dart';
 import 'package:banco/pages/Gerente/detalhamento_cliente.dart';
+import 'package:banco/provider/lista_funcionario.dart';
 import 'package:banco/provider/repository_geral.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -21,6 +22,7 @@ class _Gerente_viewState extends State<Gerente_view> {
   void initState() {
     super.initState();
     Provider.of<IRepositoryGeral>(context, listen: false).buscarNoservidor();
+    Provider.of<ListaFuncionairo>(context, listen: false).Buscarnoservidor();
   }
 
   @override
@@ -182,55 +184,6 @@ class _Gerente_viewState extends State<Gerente_view> {
             const Text(
               "Apresentação de resultados",
               style: TextStyle(fontSize: 25),
-            ),
-            SizedBox(
-              height: 400,
-              child: BarChart(
-                BarChartData(
-                  maxY: 30,
-                  gridData: const FlGridData(
-                    horizontalInterval: 5,
-                  ),
-                  backgroundColor: ThemeData().primaryColor,
-                  alignment: BarChartAlignment.spaceAround,
-                  titlesData: const FlTitlesData(
-                    leftTitles:
-                        AxisTitles(axisNameWidget: Text("Entrada de Caixa")),
-                    bottomTitles: AxisTitles(
-                      axisNameWidget: Text("Tempo"),
-                    ),
-                  ),
-                  borderData: FlBorderData(
-                    show: true,
-                  ),
-                  barGroups: [
-                    BarChartGroupData(
-                      x: 0,
-                      barRods: [
-                        BarChartRodData(toY: 5, color: Colors.grey),
-                      ],
-                    ),
-                    BarChartGroupData(
-                      x: 1,
-                      barRods: [
-                        BarChartRodData(toY: 3, color: Colors.green),
-                      ],
-                    ),
-                    BarChartGroupData(
-                      x: 2,
-                      barRods: [
-                        BarChartRodData(toY: 9, color: Colors.orange),
-                      ],
-                    ),
-                    BarChartGroupData(
-                      x: 3,
-                      barRods: [
-                        BarChartRodData(toY: 5, color: Colors.orange),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
             ),
             const Text(
               "Entrada e saida geral",

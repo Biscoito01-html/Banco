@@ -13,51 +13,128 @@ class Logins extends StatefulWidget {
 class _LoginsState extends State<Logins> {
   String? _selectedLoginType;
   bool _valor = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Login"),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            _valor
-                ? const ContaForm()
-                : Column(
-                    children: [
-                      _buildTextField("Login"),
-                      _buildTextField("Senha", isPassword: true),
-                      const SizedBox(height: 16.0),
-                      _buildLoginTypeDropdown(),
-                      const SizedBox(height: 16.0),
-                    ],
-                  ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    _navigateToSelectedScreen();
-                  },
-                  child: const Text("Entrar"),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      _valor = !_valor;
-                    });
-                  },
-                  child: const Text("Cadastrar"),
-                ),
+      body: Stack(children: [
+        Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.blue.shade900,
+                Colors.blue.shade600,
               ],
             ),
-          ],
+          ),
         ),
-      ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    color: Colors.red, borderRadius: BorderRadius.circular(10)),
+                // ignore: sort_child_properties_last
+                child: const Text(
+                  'Entra na sua conta',
+                  style: TextStyle(fontSize: 40, color: Colors.white),
+                ),
+                transform: Matrix4.rotationZ(-8 * 3.14 / 180)..translate(-20.0),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              _valor
+                  ? Container(
+                      width: double.infinity,
+                      height: 550,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.purple,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.5),
+                              offset: const Offset(2, 2),
+                            ),
+                          ]),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            const ContaForm(),
+                            const SizedBox(height: 16.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    _navigateToSelectedScreen();
+                                  },
+                                  child: const Text("Entrar"),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      _valor = !_valor;
+                                    });
+                                  },
+                                  child: const Text("Cadastrar"),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  : Container(
+                      width: double.infinity,
+                      height: 300,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.purple,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.5),
+                              offset: const Offset(2, 2),
+                            ),
+                          ]),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            _buildTextField("Login"),
+                            _buildTextField("Senha", isPassword: true),
+                            const SizedBox(height: 16.0),
+                            _buildLoginTypeDropdown(),
+                            const SizedBox(height: 16.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    _navigateToSelectedScreen();
+                                  },
+                                  child: const Text("Entrar"),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      _valor = !_valor;
+                                    });
+                                  },
+                                  child: const Text("Cadastrar"),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+            ],
+          ),
+        )
+      ]),
     );
   }
 
