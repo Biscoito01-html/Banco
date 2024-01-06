@@ -9,14 +9,12 @@ class NovoClienteComConta with ChangeNotifier {
   final baseUrl = "https://banco-f9ddd-default-rtdb.firebaseio.com";
 
   // Chamada para acesso de conta corrente
-  List<ClienteContaAssociation> clientesContaCorrente = [];
-  List<ClienteContaAssociation> clienteNovaContaPoupanca = [];
-  List<ClienteContaAssociation> clienteNovaContaCredito = [];
+  List<dynamic> contas = [];
 
   Future<void> updateConta(ClienteContaAssociation valor) async {
     try {
       final response = await http.post(
-        Uri.parse('$baseUrl/contasCorrentes/${valor.id}.json'),
+        Uri.parse('$baseUrl/contas/${valor.id}.json'),
         body: jsonEncode(
           {
             "Nome": valor.cliente.nome,
@@ -44,10 +42,9 @@ class NovoClienteComConta with ChangeNotifier {
           valor.id,
         );
 
-        final index = clientesContaCorrente
-            .indexWhere((element) => element.id == valor.id);
+        final index = contas.indexWhere((element) => element.id == valor.id);
         if (index >= 0) {
-          clientesContaCorrente[index] = updatedClienteConta;
+          contas[index] = updatedClienteConta;
         }
       } else if (response.statusCode >= 300) {
         throw FormatException(
@@ -66,7 +63,7 @@ class NovoClienteComConta with ChangeNotifier {
       final ContaCorrente contaCorrente = ContaCorrente.criarContaCorrente(0);
 
       final response = await http.post(
-        Uri.parse('$baseUrl/contasCorrentes.json'),
+        Uri.parse('$baseUrl/contas.json'),
         body: jsonEncode(
           {
             "Nome": cliente.nome,
@@ -95,10 +92,7 @@ class NovoClienteComConta with ChangeNotifier {
             ),
             contaCorrente,
             id);
-        clientesContaCorrente.add(
-          clienteContaAssoc,
-        );
-        insereNalistaGeraldeContas(
+        contas.add(
           clienteContaAssoc,
         );
       } else if (response.statusCode >= 300) {
@@ -119,7 +113,7 @@ class NovoClienteComConta with ChangeNotifier {
       final contaPoupanca = ContaPoupanca.criarContaPoupanca(0);
 
       final response = await http.post(
-        Uri.parse('$baseUrl/contasPoupanca.json'),
+        Uri.parse('$baseUrl/contas.json'),
         body: jsonEncode(
           {
             "NomeCliente": cliente.nome,
@@ -136,20 +130,7 @@ class NovoClienteComConta with ChangeNotifier {
 
       if (response.statusCode == 200) {
         final id = jsonDecode(response.body)['name'];
-        clienteNovaContaPoupanca.add(
-          ClienteContaAssociation(
-              Cliente(
-                cpf: cliente.cpf,
-                nome: cliente.nome,
-                endereco: cliente.endereco,
-                idade: cliente.idade,
-                email: cliente.email,
-                telefone: cliente.telefone,
-              ),
-              contaPoupanca,
-              id),
-        );
-        insereNalistaGeraldeContas(
+        contas.add(
           ClienteContaAssociation(
               Cliente(
                 cpf: cliente.cpf,
@@ -179,7 +160,7 @@ class NovoClienteComConta with ChangeNotifier {
       final contaCredito = ContaCredito.criarContaCredito(0);
 
       final response = await http.post(
-        Uri.parse('$baseUrl/contasCreditos.json'),
+        Uri.parse('$baseUrl/contas.json'),
         body: jsonEncode(
           {
             "NomeCliente": cliente.nome,
@@ -195,20 +176,7 @@ class NovoClienteComConta with ChangeNotifier {
       );
       if (response.statusCode == 200) {
         final id = jsonDecode(response.body)['name'];
-        clienteNovaContaCredito.add(
-          ClienteContaAssociation(
-              Cliente(
-                cpf: cliente.cpf,
-                nome: cliente.nome,
-                endereco: cliente.endereco,
-                idade: cliente.idade,
-                email: cliente.email,
-                telefone: cliente.telefone,
-              ),
-              contaCredito,
-              id),
-        );
-        insereNalistaGeraldeContas(
+        contas.add(
           ClienteContaAssociation(
               Cliente(
                 cpf: cliente.cpf,
@@ -232,45 +200,36 @@ class NovoClienteComConta with ChangeNotifier {
     notifyListeners();
   }
 
-  List<ClienteContaAssociation> contasCorrentes1 = [];
+  Map<String, dynamic> todasasContas = {};
 
-  List<ClienteContaAssociation> contasPoupanca1 = [];
-  List<ClienteContaAssociation> contasCreditos1 = [];
+  Future<void> pegarNoServidor() async {
+    try {
+      final valores = await http.get(Uri.parse('$baseUrl/contas.json'));
 
-  Future<void> pegarNoServidor() async {}
+      print("Aqui voce apos o wait $valores");
 
-  final valorGeralDeContas = [];
+      if (valores.statusCode == 200) {
+        final Map<String, dynamic> contasJson = jsonDecode(valores.body);
 
-  void insereNalistaGeraldeContas(ClienteContaAssociation clienteConta) {
-    final recebido = [contasCorrentes1, contasPoupanca1, contasCreditos1];
-
-    valorGeralDeContas.add(recebido);
-
-    notifyListeners();
+        todasasContas.addAll(contasJson);
+        print(todasasContas);
+        notifyListeners();
+      }
+    } catch (error) {
+      throw FormatException("Houve um erro na $error");
+    }
   }
 
-  List<ClienteContaAssociation> encontrarClientesPorCPF(String cpf) {
-    final valor1 = contasCorrentes1
-        .where((element) => cpf == element.cliente.cpf.numeroDeCpf);
-
-    final valor2 = contasPoupanca1
-        .where((element) => cpf == element.cliente.cpf.numeroDeCpf)
-        .toList();
-
-    final valor3 = contasCreditos1
-        .where((element) => cpf == element.cliente.cpf.numeroDeCpf)
-        .toList();
+  /*List<ClienteContaAssociation> encontrarClientesPorCPF(String cpf) {
+    final valor1 =
+        contas.where((element) => cpf == element.cliente.cpf.numeroDeCpf);
 
     if (valor1.isNotEmpty) {
       return valor1.toList();
-    } else if (valor2.isNotEmpty) {
-      return valor2.toList();
-    } else if (valor3.isNotEmpty) {
-      return valor3.toList();
     } else {
       return [];
     }
-  }
+  }*/
 }
 
 class ClienteContaAssociation {
