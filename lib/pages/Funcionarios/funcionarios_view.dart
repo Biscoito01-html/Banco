@@ -1,6 +1,7 @@
 import 'package:banco/components/DrawerFuncionario/drawer_funcionarios.dart';
 import 'package:banco/components/botao_funcionario.dart';
 import 'package:banco/provider/lista_funcionario.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -69,7 +70,6 @@ class _Funcionario_viewState extends State<Funcionario_view> {
               itemCount: provider.length,
               itemBuilder: (context, index) {
                 final cliente = provider[index];
-
                 return Column(
                   children: [
                     Row(
@@ -80,9 +80,6 @@ class _Funcionario_viewState extends State<Funcionario_view> {
                         ),
                         Text(
                           cliente.nome.toString(),
-                        ),
-                        Text(
-                          cliente.idade.toString(),
                         ),
                         Text(
                           cliente.cargo.toString(),

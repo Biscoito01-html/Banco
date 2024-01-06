@@ -40,6 +40,8 @@ class ListaFuncionairo with ChangeNotifier {
   }
 
   void Buscarnoservidor() async {
+    funcionariosAtivos.clear();
+
     final authData = await pb.admins.authWithPassword(
       'matheuscard232@gmail.com',
       'Flutter@01',
