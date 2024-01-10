@@ -20,40 +20,42 @@ class _detalharContaPoupancaState extends State<DetalharContaPoupancaTab> {
       children: [
         const Text("Contas Poupanças",
             style: TextStyle(fontSize: 20, color: Colors.red)),
-        SizedBox(
-          height: 200,
+        Expanded(
           child: ListView.builder(
             itemCount: valoresContaPoupanca.length,
             itemBuilder: (context, index) {
               final cliente = valoresContaPoupanca[index];
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => EditarContaCliente(
-                        id: "${cliente.id}",
-                        cpf: "${cliente.cpf}",
-                        nome: "${cliente.nome}",
-                        telefone: "${cliente.telefone}",
-                        email: "${cliente.email}",
-                        endereco: "${cliente.endereco}",
-                        idade: "${cliente.idade}",
-                      ),
-                    ),
-                  );
-                },
-                child: Container(
-                  decoration: BoxDecoration(border: Border.all()),
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
                   child: ListTile(
+                    leading: CircleAvatar(child: Text("${index + 1}")),
+                    trailing: Text("dc"),
                     title: Text("Nome: ${cliente.nome.nome}"),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("E-mail: ${cliente.email}"),
                         Text("Idade: ${cliente.idade}"),
+                        Text("Telefone: ${cliente.telefone}"),
                       ],
                     ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => EditarContaCliente(
+                            id: "${cliente.id}",
+                            cpf: "${cliente.cpf}",
+                            nome: "${cliente.nome}",
+                            telefone: "${cliente.telefone}",
+                            email: "${cliente.email}",
+                            endereco: "${cliente.endereco}",
+                            idade: "${cliente.idade}",
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               );

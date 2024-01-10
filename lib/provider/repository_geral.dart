@@ -83,7 +83,6 @@ class IRepositoryGeral with ChangeNotifier {
         "conta": '${contaPoupanca.conta.numeroConta}',
         "saldo": '${contaPoupanca.saldo}',
       });
-      print('Registro criado com sucesso: ${record.id}');
     } catch (error) {
       print('Erro durante a requisição: $error');
     }
@@ -121,16 +120,17 @@ class IRepositoryGeral with ChangeNotifier {
       print('Erro durante a requisição: $error');
     }
   }
-//separa o metodo buscar noservidor em uma função para cada lista
 
   Future<void> buscarNoservidor() async {
     cliente.clear();
+    contaCorrente.clear();
+    contaPoupanca.clear();
+    contaCredito.clear();
     final authData = await pb.admins.authWithPassword(
       'matheuscard232@gmail.com',
       'Flutter@01',
     );
 
-    // Cabeçalhos com token de autenticação
     final headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${authData.token}',
@@ -192,7 +192,6 @@ class IRepositoryGeral with ChangeNotifier {
   Future<void> atualizarContaCorrente(Cliente cliente) async {
     if (cliente.id == null) {
       print("Erro: ID do cliente é nulo. Não é possível atualizar.");
-      // Você pode decidir o que fazer aqui, como lançar uma exceção ou retornar sem fazer nada.
       return;
     }
     final body = <String, dynamic>{

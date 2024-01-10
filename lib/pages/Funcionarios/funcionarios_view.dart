@@ -1,5 +1,6 @@
 import 'package:banco/components/DrawerFuncionario/drawer_funcionarios.dart';
 import 'package:banco/components/botao_funcionario.dart';
+import 'package:banco/provider/lista_cliente_novo.dart';
 import 'package:banco/provider/lista_funcionario.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,8 @@ class _Funcionario_viewState extends State<Funcionario_view> {
 
   @override
   Widget build(BuildContext context) {
+    final contasFirebase =
+        Provider.of<NovoClienteComConta>(context).todasasContas;
     final provider = Provider.of<ListaFuncionairo>(context).funcionariosAtivos;
     return Scaffold(
       appBar: AppBar(
@@ -96,7 +99,27 @@ class _Funcionario_viewState extends State<Funcionario_view> {
                 );
               },
             ),
-          )
+          ),
+          Divider(),
+          Expanded(
+            child: ListView.builder(
+              itemCount: contasFirebase.length,
+              itemBuilder: (clienteId, index) {
+                final contas = contasFirebase[index];
+                final valores = contas.cliente;
+                final contasreais = contas.conta;
+
+                return Column(
+                  children: [
+                    Text(valores.endereco.toString()),
+                    Text(valores.nome.toString()),
+                    Text(valores.cpf.toString()),
+                    Text(valores.telefone.toString()),
+                  ],
+                );
+              },
+            ),
+          ),
         ],
       ),
     );
