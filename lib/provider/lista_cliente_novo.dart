@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:banco/models/CPF_models.dart';
+import 'package:banco/models/INFO_Comum.dart';
 import 'package:banco/models/cliente_models.dart';
 import 'package:banco/models/conta_models.dart';
 import 'package:flutter/material.dart';
@@ -116,7 +118,7 @@ class NovoClienteComConta with ChangeNotifier {
         Uri.parse('$baseUrl/contas.json'),
         body: jsonEncode(
           {
-            "NomeCliente": cliente.nome,
+            "Nome": cliente.nome,
             "CPF": cliente.cpf,
             "Idade": cliente.idade,
             "Email": cliente.email,
@@ -163,7 +165,7 @@ class NovoClienteComConta with ChangeNotifier {
         Uri.parse('$baseUrl/contas.json'),
         body: jsonEncode(
           {
-            "NomeCliente": cliente.nome,
+            "Nome": cliente.nome,
             "CPF": cliente.cpf,
             "Idade": cliente.idade,
             "Email": cliente.email,
@@ -200,36 +202,72 @@ class NovoClienteComConta with ChangeNotifier {
     notifyListeners();
   }
 
-  Map<String, dynamic> todasasContas = {};
+  List<ClienteContaAssociation> todasasContas = [];
 
   Future<void> pegarNoServidor() async {
+    todasasContas.clear();
     try {
       final valores = await http.get(Uri.parse('$baseUrl/contas.json'));
-
-      print("Aqui voce apos o wait $valores");
-
+      final Map<String, dynamic> contasJson = jsonDecode(valores.body);
       if (valores.statusCode == 200) {
-        final Map<String, dynamic> contasJson = jsonDecode(valores.body);
+        contasJson.forEach((key, value) {
+          todasasContas.add(
+            ClienteContaAssociation(
+                Cliente(
+                  cpf: CPF(
+                    (value['CPF'] != null && value['CPF']['valor'] != null)
+                        ? value['CPF']['valor'].toString()
+                        : '',
+                  ),
+                  nome: Nome(
+                    (value['Nome'] != null && value['Nome']['valor'] != null)
+                        ? value['Nome']['valor'] as String
+                        : 'null',
+                  ),
+                  endereco: Endereco(
+                    (value['Endereço'] != null &&
+                            value['Endereço']['valor'] != null)
+                        ? value['Endereço']['valor'] as String
+                        : 'null',
+                  ),
+                  idade: Idade(
+                    (value['Idade'] != null && value['Idade']['valor'] != null)
+                        ? value['Idade']['valor'] as int
+                        : 20,
+                  ),
+                  email: Email(
+                    (value['Email'] != null && value['Email']['valor'] != null)
+                        ? value['Email']['valor'] as String
+                        : '@mail.com',
+                  ),
+                  telefone: Telefone(
+                    (value['Telefone'] != null &&
+                            value['Telefone']['valor'] != null)
+                        ? value['Telefone']['valor'] as String
+                        : '123456789',
+                  ),
+                ),
+                Conta(
+                  ContaBancaria(
+                    (value['NumeroConta'] is String
+                        ? int.parse(value['NumeroConta'])
+                        : value['NumeroConta'] is int
+                            ? value['NumeroConta']
+                            : 0),
+                  ),
+                  double.parse(value['Saldo'].toString()),
+                ),
+                // ignore: unnecessary_cast
+                key as String),
+          );
+        });
 
-        todasasContas.addAll(contasJson);
-        print(todasasContas);
         notifyListeners();
       }
     } catch (error) {
       throw FormatException("Houve um erro na $error");
     }
   }
-
-  /*List<ClienteContaAssociation> encontrarClientesPorCPF(String cpf) {
-    final valor1 =
-        contas.where((element) => cpf == element.cliente.cpf.numeroDeCpf);
-
-    if (valor1.isNotEmpty) {
-      return valor1.toList();
-    } else {
-      return [];
-    }
-  }*/
 }
 
 class ClienteContaAssociation {

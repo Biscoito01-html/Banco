@@ -33,6 +33,7 @@ class _LoginsState extends State<Logins> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
+                padding: EdgeInsets.fromLTRB(12, 10, 12, 10),
                 decoration: BoxDecoration(
                     color: Colors.red, borderRadius: BorderRadius.circular(10)),
                 // ignore: sort_child_properties_last
