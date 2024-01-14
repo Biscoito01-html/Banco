@@ -1,6 +1,5 @@
-import 'package:banco/pages/Gerente/detalhamento_cliente.dart';
 import 'package:banco/provider/lista_cliente_novo.dart';
-import 'package:banco/provider/repository_geral.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,8 +20,8 @@ class _DetalharContasCreditosState extends State<DetalharContasCreditosTab> {
 
   @override
   Widget build(BuildContext context) {
-    final valoresContaCredito =
-        Provider.of<IRepositoryGeral>(context, listen: false).contaCredito;
+    // final valoresContaCredito =
+    //     Provider.of<IRepositoryGeral>(context, listen: false).contaCredito;
 
     final contas =
         Provider.of<NovoClienteComConta>(context, listen: false).todasasContas;
@@ -31,7 +30,7 @@ class _DetalharContasCreditosState extends State<DetalharContasCreditosTab> {
       children: [
         const Text("Contas Credito",
             style: TextStyle(fontSize: 20, color: Colors.red)),
-        Expanded(
+        /*Expanded(
           child: ListView.builder(
             itemCount: valoresContaCredito.length,
             itemBuilder: (context, index) {
@@ -72,7 +71,7 @@ class _DetalharContasCreditosState extends State<DetalharContasCreditosTab> {
               );
             },
           ),
-        ),
+        ),*/
       ],
     );
   }

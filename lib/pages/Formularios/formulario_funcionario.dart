@@ -1,8 +1,5 @@
 import 'package:banco/models/funcionarios_models.dart';
-import 'package:banco/provider/lista_funcionario.dart';
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class Formulario extends StatefulWidget {
   const Formulario({Key? key}) : super(key: key);
@@ -189,8 +186,8 @@ class _FormularioState extends State<Formulario> {
         telefone: telefoneController.text,
       );
 
-      Provider.of<ListaFuncionairo>(context, listen: false)
-          .setFuncionario(funcionario);
+      //  Provider.of<ListaFuncionairo>(context, listen: false)
+      //    .setFuncionario(funcionario);
 
       _mostrarMensagemSucesso("Cadastrado com sucesso");
     }

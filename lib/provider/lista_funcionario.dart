@@ -1,4 +1,4 @@
-import 'package:banco/models/funcionarios_models.dart';
+/*import 'package:banco/models/funcionarios_models.dart';
 import 'package:flutter/material.dart';
 import 'package:pocketbase/pocketbase.dart';
 
@@ -100,3 +100,4 @@ class ListaFuncionairo with ChangeNotifier {
         .create(headers: headers, body: body);
   }
 }
+*/

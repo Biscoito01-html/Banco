@@ -1,8 +1,5 @@
 // ignore: file_names
-import 'package:banco/pages/Gerente/detalhamento_cliente.dart';
-import 'package:banco/provider/repository_geral.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class DetalharContaCorrenteTab extends StatefulWidget {
   const DetalharContaCorrenteTab({super.key});
@@ -15,8 +12,8 @@ class DetalharContaCorrenteTab extends StatefulWidget {
 class _DetalharContaCorrenteState extends State<DetalharContaCorrenteTab> {
   @override
   Widget build(BuildContext context) {
-    final valoresContaCorrente =
-        Provider.of<IRepositoryGeral>(context, listen: false).contaCorrente;
+    // final valoresContaCorrente =
+    //   Provider.of<IRepositoryGeral>(context, listen: false).contaCorrente;
 
     return Column(
       children: [
@@ -24,7 +21,7 @@ class _DetalharContaCorrenteState extends State<DetalharContaCorrenteTab> {
           "Contas Correntes ",
           style: TextStyle(fontSize: 20, color: Colors.red),
         ),
-        Expanded(
+        /*Expanded(
           child: ListView.builder(
             itemCount: valoresContaCorrente.length,
             itemBuilder: (context, index) {
@@ -66,7 +63,7 @@ class _DetalharContaCorrenteState extends State<DetalharContaCorrenteTab> {
               );
             },
           ),
-        ),
+        ),*/
       ],
     );
   }

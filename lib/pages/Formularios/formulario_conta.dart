@@ -1,6 +1,6 @@
 import 'package:banco/models/cliente_models.dart';
 import 'package:banco/provider/lista_cliente_novo.dart';
-import 'package:banco/provider/repository_geral.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,8 +23,8 @@ class _ContaFormState extends State<ContaForm> {
   NovoClienteComConta get provider =>
       Provider.of<NovoClienteComConta>(context, listen: false);
 
-  IRepositoryGeral get providerGeral =>
-      Provider.of<IRepositoryGeral>(context, listen: false);
+  // IRepositoryGeral get providerGeral =>
+  // Provider.of<IRepositoryGeral>(context, listen: false);
 
   String _tipoContaSelecionada = 'Conta Corrente';
 
@@ -44,19 +44,19 @@ class _ContaFormState extends State<ContaForm> {
     switch (_tipoContaSelecionada) {
       case 'Conta Corrente':
         provider.inserirClienteContaCorrente(cliente);
-        providerGeral.setContaCorrente(cliente);
+        // providerGeral.setContaCorrente(cliente);
         _mostrarMensagemSucesso('Criado com sucesso');
 
         break;
       case 'Conta Poupança':
         provider.inserirClienteContaPoupanca(cliente);
-        providerGeral.setPoupanca(cliente);
+        // providerGeral.setPoupanca(cliente);
         _mostrarMensagemSucesso('Criado com porems sucesso');
 
         break;
       case 'Conta de Crédito':
         provider.inserirClienteContaCredito(cliente);
-        providerGeral.setCredito(cliente);
+        // providerGeral.setCredito(cliente);
         _mostrarMensagemSucesso('Criado com sucesso');
 
       default:

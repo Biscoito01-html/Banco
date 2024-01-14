@@ -18,13 +18,23 @@ class _LoginsState extends State<Logins> {
     return Scaffold(
       body: Stack(children: [
         Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.blue.shade900,
-                Colors.blue.shade600,
-              ],
-            ),
+          height: 400,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/background.png'),
+                  fit: BoxFit.fill)),
+          child: Stack(
+            children: <Widget>[
+              Positioned(
+                  left: 40,
+                  width: 80,
+                  height: 200,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('assets/light-2.png'))),
+                  )),
+            ],
           ),
         ),
         Padding(
@@ -32,10 +42,15 @@ class _LoginsState extends State<Logins> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const SizedBox(
+                height: 250,
+              ),
               Container(
                 padding: EdgeInsets.fromLTRB(12, 10, 12, 10),
                 decoration: BoxDecoration(
-                    color: Colors.red, borderRadius: BorderRadius.circular(10)),
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 // ignore: sort_child_properties_last
                 child: const Text(
                   'Entra na sua conta',
@@ -51,14 +66,18 @@ class _LoginsState extends State<Logins> {
                       width: double.infinity,
                       height: 550,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.purple,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.5),
-                              offset: const Offset(2, 2),
-                            ),
-                          ]),
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: const LinearGradient(colors: [
+                          Color.fromARGB(255, 13, 60, 218),
+                          Color.fromARGB(255, 80, 102, 177)
+                        ]),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.5),
+                            offset: const Offset(2, 2),
+                          ),
+                        ],
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
@@ -93,7 +112,10 @@ class _LoginsState extends State<Logins> {
                       height: 300,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Colors.purple,
+                          gradient: const LinearGradient(colors: [
+                            Color.fromARGB(255, 13, 60, 218),
+                            Color.fromARGB(255, 80, 102, 177)
+                          ]),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black.withOpacity(0.5),

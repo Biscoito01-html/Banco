@@ -1,9 +1,7 @@
 import 'package:banco/models/CPF_models.dart';
 import 'package:banco/models/INFO_Comum.dart';
 import 'package:banco/models/cliente_models.dart';
-import 'package:banco/provider/repository_geral.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class EditarContaCliente extends StatefulWidget {
   final String id;
@@ -47,8 +45,8 @@ class _EditarContaClienteState extends State<EditarContaCliente> {
     _telefoneController = TextEditingController(text: widget.telefone);
   }
 
-  IRepositoryGeral get provider =>
-      Provider.of<IRepositoryGeral>(context, listen: false);
+  // IRepositoryGeral get provider =>
+  //  Provider.of<IRepositoryGeral>(context, listen: false);
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +92,7 @@ class _EditarContaClienteState extends State<EditarContaCliente> {
                   telefone: Telefone(_telefoneController.text),
                 );
 
-                await provider.atualizarContaCorrente(clienteAtualizado);
+                //  await provider.atualizarContaCorrente(clienteAtualizado);
 
                 // ignore: use_build_context_synchronously
                 Navigator.pop(context); // Volte para a página anterior

@@ -3,8 +3,7 @@ import 'package:banco/pages/Gerente/detalhar_cliente_contaCorrente.dart';
 import 'package:banco/pages/Gerente/detalhar_cliente_credito.dart';
 import 'package:banco/pages/Gerente/detalhar_cliente_poupanca.dart';
 import 'package:banco/provider/lista_cliente_novo.dart';
-import 'package:banco/provider/lista_funcionario.dart';
-import 'package:banco/provider/repository_geral.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -22,9 +21,9 @@ class Gerente_view extends StatefulWidget {
 class _Gerente_viewState extends State<Gerente_view> {
   @override
   void initState() {
-    Provider.of<IRepositoryGeral>(context, listen: false).buscarNoservidor();
+    //  Provider.of<IRepositoryGeral>(context, listen: false).buscarNoservidor();
     super.initState();
-    Provider.of<ListaFuncionairo>(context, listen: false).Buscarnoservidor();
+    //  Provider.of<ListaFuncionairo>(context, listen: false).Buscarnoservidor();
     super.initState();
     Provider.of<NovoClienteComConta>(context, listen: false).pegarNoServidor();
     super.initState();

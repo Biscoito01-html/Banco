@@ -1,8 +1,7 @@
 import 'package:banco/components/DrawerFuncionario/drawer_funcionarios.dart';
 import 'package:banco/components/botao_funcionario.dart';
 import 'package:banco/provider/lista_cliente_novo.dart';
-import 'package:banco/provider/lista_funcionario.dart';
-import 'package:fl_chart/fl_chart.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +16,7 @@ class Funcionario_view extends StatefulWidget {
 class _Funcionario_viewState extends State<Funcionario_view> {
   @override
   void initState() {
-    Provider.of<ListaFuncionairo>(context, listen: false).Buscarnoservidor();
+    //  Provider.of<ListaFuncionairo>(context, listen: false).Buscarnoservidor();
     super.initState();
   }
 
@@ -25,7 +24,7 @@ class _Funcionario_viewState extends State<Funcionario_view> {
   Widget build(BuildContext context) {
     final contasFirebase =
         Provider.of<NovoClienteComConta>(context).todasasContas;
-    final provider = Provider.of<ListaFuncionairo>(context).funcionariosAtivos;
+    // final provider = Provider.of<ListaFuncionairo>(context).funcionariosAtivos;
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -68,7 +67,7 @@ class _Funcionario_viewState extends State<Funcionario_view> {
             ),
           ),
           const Divider(color: Colors.amber),
-          Expanded(
+          /*Expanded(
             child: ListView.builder(
               itemCount: provider.length,
               itemBuilder: (context, index) {
@@ -99,7 +98,7 @@ class _Funcionario_viewState extends State<Funcionario_view> {
                 );
               },
             ),
-          ),
+          ),*/
           Divider(),
           Expanded(
             child: ListView.builder(

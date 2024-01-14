@@ -1,7 +1,4 @@
-import 'package:banco/pages/Gerente/detalhamento_cliente.dart';
-import 'package:banco/provider/repository_geral.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class DetalharContaPoupancaTab extends StatefulWidget {
   const DetalharContaPoupancaTab({super.key});
@@ -14,13 +11,13 @@ class DetalharContaPoupancaTab extends StatefulWidget {
 class _detalharContaPoupancaState extends State<DetalharContaPoupancaTab> {
   @override
   Widget build(BuildContext context) {
-    final valoresContaPoupanca =
-        Provider.of<IRepositoryGeral>(context, listen: false).contaPoupanca;
+    //final valoresContaPoupanca =
+    // Provider.of<IRepositoryGeral>(context, listen: false).contaPoupanca;
     return Column(
       children: [
         const Text("Contas Poupanças",
             style: TextStyle(fontSize: 20, color: Colors.red)),
-        Expanded(
+        /*  Expanded(
           child: ListView.builder(
             itemCount: valoresContaPoupanca.length,
             itemBuilder: (context, index) {
@@ -61,7 +58,7 @@ class _detalharContaPoupancaState extends State<DetalharContaPoupancaTab> {
               );
             },
           ),
-        ),
+        ),*/
       ],
     );
   }
